@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.20.0/babel.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // Define a class-based React component
+        class Content extends React.Component {
+            constructor() {
+                super();
+            }
+
+            // Render method to display heading and paragraph
+            render() {
+                const headingStyle = {
+                    color: 'blue',
+                    textAlign: 'center',
+                };
+
+                const paragraphStyle = {
+                    color: 'gray',
+                    textAlign: 'center',
+                };
+
+                return (
+                    <div>
+                        <h1 style={headingStyle}>Welcome to React World</h1>
+                        <p style={paragraphStyle}>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                            Neque adipisci cum aliquam alias quia incidunt ipsam cupiditate reprehenderit laboriosam dolorum at provident, officia voluptate dolore eveniet? Minus voluptates modi labore.
+
+                        </p>
+                    </div>
+                );
+            }
+        }
+
+        // Render the component into the root element
+        // const root = ReactDOM.createRoot(document.getElementById('root'));
+        // root.render(<Content />);
+        ReactDOM.render(<Content />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
