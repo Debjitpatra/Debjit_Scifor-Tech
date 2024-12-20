@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.20.0/babel.min.js"></script>
+    <title>React Using Props</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function UserDetail(props) {
+            return (
+                <div id="form">
+                    <h2>User Details</h2>
+                    <p><strong>Name:</strong> {props.name}</p>
+                    <p><strong>Age:</strong> {props.age}</p>
+                    <p><strong>Email:</strong> {props.email}</p>
+                    <p><strong>Mobile No:</strong> {props.mobileNo}</p>
+                    <p><strong>City:</strong> {props.city}</p>
+                </div>
+            );
+        }
+
+        function App() {
+            const user = {
+                name: "Debjit Patra",
+                age: 23,
+                email: "debjitpatra8521@gmail.com",
+                mobileNo: "1234567890",
+                city: "Banglore"
+            };
+
+            return (
+                <div>
+                    <UserDetail
+                        name={user.name}
+                        age={user.age}
+                        email={user.email}
+                        mobileNo={user.mobileNo}
+                        city={user.city}
+                    />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: whitesmoke;
+            display: flex;
+            justify-content: center;
+        }
+
+        #form {
+            background-color: blue;
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin-top: 80px;
+            
+        }
+    </style>
+</body>
+
+</html>
