@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>Theme change</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // Theme Context
+        const ThemeContext = React.createContext();
+
+        function ThemeProvider({ children }) {
+            const [theme, setTheme] = React.useState("light");
+
+            const toggleTheme = () => {
+                setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+            };
+
+            // Set background color based on theme
+            React.useEffect(() => {
+                document.body.style.backgroundColor = theme === "light" ? "rgb(165, 165, 242)" : "rgb(30, 30, 30)";
+            }, [theme]);
+
+            return (
+                <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                    {children}
+                </ThemeContext.Provider>
+            );
+        }
+
+        function ThemeToggle() {
+            const { theme, toggleTheme } = React.useContext(ThemeContext);
+            return (
+                <button onClick={toggleTheme}>
+                    Switch to {theme === "light" ? "Dark" : "Light"} Mode
+                </button>
+            );
+        }
+
+        function App() {
+            const { theme } = React.useContext(ThemeContext);
+
+            return (
+                <div>
+                    <h1>Theme App</h1>
+                    <ThemeToggle />
+                </div>
+            );
+        }
+
+        function Root() {
+            return (
+                <ThemeProvider>
+                    <App />
+                </ThemeProvider>
+            );
+        }
+
+        ReactDOM.render(<Root />, document.getElementById("root"));
+    </script>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        div {
+            text-align: center;
+            padding: 40px;
+            border-radius: 10px;
+            background-color: rgb(80, 6, 150);
+            color: white;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(15, 15, 190);
+            color: white;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+    </style>
+</body>
+
+</html>
