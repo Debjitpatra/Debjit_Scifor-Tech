@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone"></script>
+    <title>To-Do List App</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { createContext, useState, useContext } = React;
+
+        const TodoContext = createContext();
+        const useTodos = () => useContext(TodoContext);
+
+        const TodoProvider = ({ children }) => {
+            const [tasks, setTasks] = useState([]);
+
+            const addTask = (task) => {
+                setTasks((prevTasks) => [...prevTasks, task]);
+            };
+
+            const removeTask = (taskId) => {
+                setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+            };
+
+            return (
+                <TodoContext.Provider value={{ tasks, addTask, removeTask }}>
+                    {children}
+                </TodoContext.Provider>
+            );
+        }; 
+
+        // TodoList.js
+        const TodoList = () => {
+            const { tasks, addTask, removeTask } = useTodos();
+            const [newTask, setNewTask] = useState("");
+
+            const handleAddTask = () => {
+                if (newTask.trim()) {
+                    const task = { id: Date.now(), name: newTask };
+                    addTask(task);
+                    setNewTask("");
+                }
+            };
+
+            const handleRemoveTask = (taskId) => {
+                removeTask(taskId);
+            };
+
+            return (
+                <div>
+                    <h1>To-Do App</h1>
+                    <input
+                        type="text"
+                        value={newTask}
+                        onChange={(e) => setNewTask(e.target.value)}
+                        placeholder="Add a new task"
+                    />
+                    <button onClick={handleAddTask}>Add Task</button>
+
+                    <ul>
+                        {tasks.map((task) => (
+                            <li key={task.id}>
+                                {task.name}{" "}
+                                <button onClick={() => handleRemoveTask(task.id)}>Remove</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        };
+
+
+        const App = () => {
+            return (
+                <TodoProvider>
+                    <TodoList />
+                </TodoProvider>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            padding: 10px;
+            width: 200px;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        h1 {
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        li {
+            font-size: 14px;
+            padding: 6px;
+            margin: 4px 0;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        
+    </style>
+    
+</body>
+
+</html>
